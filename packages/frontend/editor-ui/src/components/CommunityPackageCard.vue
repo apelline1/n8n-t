@@ -5,6 +5,9 @@ import { NPM_PACKAGE_DOCS_BASE_URL, COMMUNITY_PACKAGE_MANAGE_ACTIONS } from '@/c
 import { useI18n } from '@n8n/i18n';
 import { useTelemetry } from '@/composables/useTelemetry';
 import { useSettingsStore } from '@/stores/settings.store';
+import { useNodeTypesStore } from '@/stores/nodeTypes.store';
+import { computed, onMounted, ref } from 'vue';
+import semver from 'semver';
 
 interface Props {
 	communityPackage?: PublicInstalledPackage | null;
@@ -21,6 +24,20 @@ const { openCommunityPackageUpdateConfirmModal, openCommunityPackageUninstallCon
 const i18n = useI18n();
 const telemetry = useTelemetry();
 const settingsStore = useSettingsStore();
+
+const nodeTypesStore = useNodeTypesStore();
+const latestVersion = ref<string | null>(null);
+const currVersion = props.communityPackage?.installedVersion || '';
+
+const hasUnverifiedPackagesUpdate = computed(() => {
+	return settingsStore.isUnverifiedPackagesEnabled && props.communityPackage?.updateAvailable;
+});
+
+const hasVerifiedPackageUpdate = computed(() => {
+	const canUpdate = semver.gt(latestVersion.value || '', currVersion);
+
+	return settingsStore.isCommunityNodesFeatureEnabled && canUpdate;
+});
 
 const packageActions = [
 	{
@@ -56,6 +73,22 @@ function onUpdateClick() {
 	if (!props.communityPackage) return;
 	openCommunityPackageUpdateConfirmModal(props.communityPackage.packageName);
 }
+
+async function fetchPackageInfo(packageName: string) {
+	const communityNodeAttributes = await nodeTypesStore.getCommunityNodeAttributes(packageName);
+
+	if (communityNodeAttributes) {
+		latestVersion.value = communityNodeAttributes.npmVersion;
+
+		return;
+	}
+}
+
+onMounted(async () => {
+	if (props.communityPackage?.packageName) {
+		await fetchPackageInfo(props.communityPackage?.installedNodes[0].type);
+	}
+});
 </script>
 
 <template>
@@ -98,7 +131,7 @@ function onUpdateClick() {
 					<n8n-icon icon="exclamation-triangle" color="danger" size="large" />
 				</n8n-tooltip>
 				<n8n-tooltip
-					v-else-if="settingsStore.isUnverifiedPackagesEnabled && communityPackage.updateAvailable"
+					v-else-if="hasUnverifiedPackagesUpdate || hasVerifiedPackageUpdate"
 					placement="top"
 				>
 					<template #content>
