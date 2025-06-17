@@ -43,7 +43,7 @@ const BASE_ENV: Record<string, string> = {
 // Multi-main license (required for multiple main instances)
 const MULTI_MAIN_LICENSE = {
 	N8N_LICENSE_TENANT_ID: '1001',
-	N8N_LICENSE_ACTIVATION_KEY: '',
+	N8N_LICENSE_ACTIVATION_KEY: process.env.N8N_LICENSE_ACTIVATION_KEY ?? '',
 };
 
 // Wait strategy for n8n containers

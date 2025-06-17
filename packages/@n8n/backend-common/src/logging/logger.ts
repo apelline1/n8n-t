@@ -152,9 +152,7 @@ export class Logger implements LoggerType {
 		} else if (this.level === 'debug' && inProduction) {
 			return this.debugProdConsoleFormat();
 		} else {
-			return winston.format.printf((info: winston.Logform.TransformableInfo) =>
-				String(info.message),
-			);
+			return winston.format.printf(({ message }: { message: string }) => message);
 		}
 	}
 

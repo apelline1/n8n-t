@@ -1,4 +1,4 @@
-import type { ErrorEvent } from '@sentry/core';
+import type { ErrorEvent } from '@sentry/types';
 import { mock } from 'jest-mock-extended';
 import type { ErrorReporter } from 'n8n-core';
 

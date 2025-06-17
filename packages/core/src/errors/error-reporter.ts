@@ -1,7 +1,7 @@
 import { Logger } from '@n8n/backend-common';
 import type { InstanceType } from '@n8n/constants';
 import { Service } from '@n8n/di';
-import type { ErrorEvent, EventHint } from '@sentry/core';
+import type { ErrorEvent, EventHint } from '@sentry/types';
 import type { NodeOptions } from '@sentry/node';
 import { AxiosError } from 'axios';
 import type { ReportingOptions } from 'n8n-workflow';

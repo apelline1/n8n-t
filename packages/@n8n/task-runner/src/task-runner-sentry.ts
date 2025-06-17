@@ -1,5 +1,5 @@
 import { Service } from '@n8n/di';
-import type { ErrorEvent, Exception } from '@sentry/core';
+import type { ErrorEvent, Exception } from '@sentry/types';
 import { ErrorReporter } from 'n8n-core';
 
 import { SentryConfig } from './config/sentry-config';
