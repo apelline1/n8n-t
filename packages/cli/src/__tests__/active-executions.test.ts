@@ -1,4 +1,5 @@
 import type { ExecutionRepository } from '@n8n/db';
+import type { Response } from 'express';
 import { captor, mock } from 'jest-mock-extended';
 import type {
 	IDeferredPromise,
@@ -178,6 +179,13 @@ describe('ActiveExecutions', () => {
 			activeExecutions.finalizeExecution(executionId, fullRunData);
 
 			await expect(postExecutePromise).resolves.toEqual(fullRunData);
+		});
+
+		test('Should close response if it exists', async () => {
+			executionData.httpResponse = mock<Response>();
+			const executionId = await activeExecutions.add(executionData);
+			activeExecutions.finalizeExecution(executionId, fullRunData);
+			expect(executionData.httpResponse.end).toHaveBeenCalled();
 		});
 	});
 

@@ -919,6 +919,7 @@ export type IExecuteFunctions = ExecuteFunctions.GetNodeParameterFn &
 		putExecutionToWait(waitTill: Date): Promise<void>;
 		sendMessageToUI(message: any): void;
 		sendResponse(response: IExecuteResponsePromiseData): void;
+		sendChunk(type: ChunkType, content?: IDataObject | string): void;
 
 		// TODO: Make this one then only available in the new config one
 		addInputData(
@@ -2093,7 +2094,12 @@ export interface IWebhookResponseData {
 }
 
 export type WebhookResponseData = 'allEntries' | 'firstEntryJson' | 'firstEntryBinary' | 'noData';
-export type WebhookResponseMode = 'onReceived' | 'lastNode' | 'responseNode' | 'formPage';
+export type WebhookResponseMode =
+	| 'onReceived'
+	| 'lastNode'
+	| 'responseNode'
+	| 'formPage'
+	| 'streaming';
 
 export interface INodeTypes {
 	getByName(nodeType: string): INodeType | IVersionedNodeType;
@@ -2324,6 +2330,8 @@ export interface IWorkflowExecutionDataProcess {
 		data?: ITaskData;
 	};
 	agentRequest?: AiAgentRequest;
+	httpResponse?: express.Response; // Used for streaming responses
+	streamingEnabled?: boolean;
 }
 
 export interface ExecuteWorkflowOptions {
@@ -2915,3 +2923,14 @@ export type IPersonalizationSurveyAnswersV4 = {
 	reportedSource?: string | null;
 	reportedSourceOther?: string | null;
 };
+
+export type ChunkType = 'begin' | 'item' | 'end';
+export interface StructuredChunk {
+	type: ChunkType;
+	content?: string;
+	metadata: {
+		nodeId: string;
+		nodeName: string;
+		timestamp: number;
+	};
+}
