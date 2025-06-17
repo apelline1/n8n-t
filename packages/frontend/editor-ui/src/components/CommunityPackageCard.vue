@@ -26,7 +26,7 @@ const telemetry = useTelemetry();
 const settingsStore = useSettingsStore();
 
 const nodeTypesStore = useNodeTypesStore();
-const latestVersion = ref<string | null>(null);
+const latestVerifiedVersion = ref<string | null>(null);
 const currVersion = props.communityPackage?.installedVersion || '';
 
 const hasUnverifiedPackagesUpdate = computed(() => {
@@ -34,7 +34,8 @@ const hasUnverifiedPackagesUpdate = computed(() => {
 });
 
 const hasVerifiedPackageUpdate = computed(() => {
-	const canUpdate = semver.gt(latestVersion.value || '', currVersion);
+	const canUpdate =
+		latestVerifiedVersion.value && semver.gt(latestVerifiedVersion.value || '', currVersion);
 
 	return settingsStore.isCommunityNodesFeatureEnabled && canUpdate;
 });
@@ -78,7 +79,7 @@ async function fetchPackageInfo(packageName: string) {
 	const communityNodeAttributes = await nodeTypesStore.getCommunityNodeAttributes(packageName);
 
 	if (communityNodeAttributes) {
-		latestVersion.value = communityNodeAttributes.npmVersion;
+		latestVerifiedVersion.value = communityNodeAttributes.npmVersion;
 
 		return;
 	}

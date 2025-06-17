@@ -2276,8 +2276,8 @@ importers:
         specifier: ^3.3.4
         version: 3.3.4(vue@3.5.13(typescript@5.8.2))
       semver:
-        specifier: 7.5.4
-        version: 7.5.4
+        specifier: ^7.5.4
+        version: 7.7.2
       stream-browserify:
         specifier: ^3.0.0
         version: 3.0.0
@@ -12781,11 +12781,6 @@ packages:
   selderee@0.11.0:
     resolution: {integrity: sha512-5TF+l7p4+OsnP8BCCvSyZiSPc4x4//p5uPwK8TCnVPJYRmU2aYKMpOXvw8zM5a5JvuuCGN1jmsMwuU2W02ukfA==}
 
-  semver@7.5.4:
-    resolution: {integrity: sha512-1bCSESV6Pv+i21Hvpxp3Dx+pSD8lIPt8uVjRrxAUt/nbswYc+tK6Y2btiULjd4+fnq15PX+nqQDC7Oft7WkwcA==}
-    engines: {node: '>=10'}
-    hasBin: true
-
   semver@7.6.0:
     resolution: {integrity: sha512-EnwXhrlwXMk9gKu5/flx5sv/an57AkRplG3hTK68W7FRDN+k+OWBj65M7719OkA82XLBxrcX0KSHj+X5COhOVg==}
     engines: {node: '>=10'}
@@ -15722,7 +15717,7 @@ snapshots:
       debug: 4.4.1(supports-color@8.1.1)
       gensync: 1.0.0-beta.2
       json5: 2.2.3
-      semver: 7.5.4
+      semver: 7.7.2
     transitivePeerDependencies:
       - supports-color
 
@@ -15744,7 +15739,7 @@ snapshots:
       '@babel/helper-validator-option': 7.25.9
       browserslist: 4.24.4
       lru-cache: 5.1.1
-      semver: 7.5.4
+      semver: 7.7.2
 
   '@babel/helper-create-class-features-plugin@7.26.9(@babel/core@7.26.10)':
     dependencies:
@@ -15755,7 +15750,7 @@ snapshots:
       '@babel/helper-replace-supers': 7.26.5(@babel/core@7.26.10)
       '@babel/helper-skip-transparent-expression-wrappers': 7.25.9
       '@babel/traverse': 7.26.10
-      semver: 7.5.4
+      semver: 7.7.2
     transitivePeerDependencies:
       - supports-color
 
@@ -15764,7 +15759,7 @@ snapshots:
       '@babel/core': 7.26.10
       '@babel/helper-annotate-as-pure': 7.25.9
       regexpu-core: 6.2.0
-      semver: 7.5.4
+      semver: 7.7.2
 
   '@babel/helper-define-polyfill-provider@0.6.3(@babel/core@7.26.10)':
     dependencies:
@@ -16374,7 +16369,7 @@ snapshots:
       babel-plugin-polyfill-corejs3: 0.11.1(@babel/core@7.26.10)
       babel-plugin-polyfill-regenerator: 0.6.3(@babel/core@7.26.10)
       core-js-compat: 3.41.0
-      semver: 7.5.4
+      semver: 7.7.2
     transitivePeerDependencies:
       - supports-color
 
@@ -20899,14 +20894,6 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  axios@1.9.0:
-    dependencies:
-      follow-redirects: 1.15.9(debug@4.3.6)
-      form-data: 4.0.2
-      proxy-from-env: 1.1.0
-    transitivePeerDependencies:
-      - debug
-
   axios@1.9.0(debug@4.3.6):
     dependencies:
       follow-redirects: 1.15.9(debug@4.3.6)
@@ -20918,6 +20905,14 @@ snapshots:
   axios@1.9.0(debug@4.4.0):
     dependencies:
       follow-redirects: 1.15.9(debug@4.4.0)
+      form-data: 4.0.2
+      proxy-from-env: 1.1.0
+    transitivePeerDependencies:
+      - debug
+
+  axios@1.9.0(debug@4.4.1):
+    dependencies:
+      follow-redirects: 1.15.9(debug@4.3.6)
       form-data: 4.0.2
       proxy-from-env: 1.1.0
     transitivePeerDependencies:
@@ -20958,7 +20953,7 @@ snapshots:
       '@babel/compat-data': 7.26.8
       '@babel/core': 7.26.10
       '@babel/helper-define-polyfill-provider': 0.6.3(@babel/core@7.26.10)
-      semver: 7.5.4
+      semver: 7.7.2
     transitivePeerDependencies:
       - supports-color
 
@@ -22530,7 +22525,7 @@ snapshots:
 
   eslint-import-resolver-node@0.3.9:
     dependencies:
-      debug: 3.2.7(supports-color@8.1.1)
+      debug: 3.2.7(supports-color@5.5.0)
       is-core-module: 2.13.1
       resolve: 1.22.8
     transitivePeerDependencies:
@@ -22555,7 +22550,7 @@ snapshots:
 
   eslint-module-utils@2.8.0(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.8.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0):
     dependencies:
-      debug: 3.2.7(supports-color@8.1.1)
+      debug: 3.2.7(supports-color@5.5.0)
     optionalDependencies:
       '@typescript-eslint/parser': 7.2.0(eslint@8.57.0)(typescript@5.8.2)
       eslint: 8.57.0
@@ -22575,7 +22570,7 @@ snapshots:
       array.prototype.findlastindex: 1.2.3
       array.prototype.flat: 1.3.2
       array.prototype.flatmap: 1.3.2
-      debug: 3.2.7(supports-color@8.1.1)
+      debug: 3.2.7(supports-color@5.5.0)
       doctrine: 2.1.0
       eslint: 8.57.0
       eslint-import-resolver-node: 0.3.9
@@ -23400,7 +23395,7 @@ snapshots:
       array-parallel: 0.1.3
       array-series: 0.1.5
       cross-spawn: 7.0.6
-      debug: 3.2.7(supports-color@8.1.1)
+      debug: 3.2.7(supports-color@5.5.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -23695,7 +23690,7 @@ snapshots:
       '@types/debug': 4.1.12
       '@types/node': 20.17.57
       '@types/tough-cookie': 4.0.5
-      axios: 1.9.0
+      axios: 1.9.0(debug@4.4.1)
       camelcase: 6.3.0
       debug: 4.4.1(supports-color@8.1.1)
       dotenv: 16.5.0
@@ -23770,7 +23765,7 @@ snapshots:
 
   infisical-node@1.3.0:
     dependencies:
-      axios: 1.9.0
+      axios: 1.9.0(debug@4.4.1)
       dotenv: 16.3.1
       tweetnacl: 1.0.3
       tweetnacl-util: 0.15.1
@@ -24719,7 +24714,7 @@ snapshots:
       '@langchain/groq': 0.1.3(@langchain/core@0.3.48(openai@4.78.1(encoding@0.1.13)(zod@3.24.1)))(encoding@0.1.13)
       '@langchain/mistralai': 0.2.0(@langchain/core@0.3.48(openai@4.78.1(encoding@0.1.13)(zod@3.24.1)))
       '@langchain/ollama': 0.1.4(@langchain/core@0.3.48(openai@4.78.1(encoding@0.1.13)(zod@3.24.1)))
-      axios: 1.9.0
+      axios: 1.9.0(debug@4.4.1)
       cheerio: 1.0.0
       handlebars: 4.7.8
     transitivePeerDependencies:
@@ -25060,7 +25055,7 @@ snapshots:
 
   make-dir@4.0.0:
     dependencies:
-      semver: 7.5.4
+      semver: 7.7.2
 
   make-error@1.3.6: {}
 
@@ -26292,7 +26287,7 @@ snapshots:
 
   pdf-parse@1.1.1:
     dependencies:
-      debug: 3.2.7(supports-color@8.1.1)
+      debug: 3.2.7(supports-color@5.5.0)
       node-ensure: 0.0.0
     transitivePeerDependencies:
       - supports-color
@@ -26517,7 +26512,7 @@ snapshots:
 
   posthog-node@3.2.1:
     dependencies:
-      axios: 1.9.0
+      axios: 1.9.0(debug@4.4.1)
       rusha: 0.8.14
     transitivePeerDependencies:
       - debug
@@ -27096,7 +27091,7 @@ snapshots:
 
   retry-axios@2.6.0(axios@1.9.0(debug@4.4.1)):
     dependencies:
-      axios: 1.9.0
+      axios: 1.9.0(debug@4.4.1)
 
   retry-request@7.0.2(encoding@0.1.13):
     dependencies:
@@ -27121,7 +27116,7 @@ snapshots:
 
   rhea@1.0.24:
     dependencies:
-      debug: 3.2.7(supports-color@8.1.1)
+      debug: 3.2.7(supports-color@5.5.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -27283,10 +27278,6 @@ snapshots:
   selderee@0.11.0:
     dependencies:
       parseley: 0.12.1
-
-  semver@7.5.4:
-    dependencies:
-      lru-cache: 6.0.0
 
   semver@7.6.0:
     dependencies:
@@ -27562,7 +27553,7 @@ snapshots:
       asn1.js: 5.4.1
       asn1.js-rfc2560: 5.0.1(asn1.js@5.4.1)
       asn1.js-rfc5280: 3.0.0
-      axios: 1.9.0
+      axios: 1.9.0(debug@4.4.1)
       big-integer: 1.6.52
       bignumber.js: 9.1.2
       binascii: 0.0.2
