@@ -12,6 +12,10 @@ COPY pnpm-workspace.yaml ./
 # If you have this
 COPY packages packages/
 COPY scripts scripts/
+# Copy the 'patches' directory
+COPY patches/ patches/
+# Install all dependencies (including devDependencies for build)
+RUN pnpm install --frozen-lockfile --production=false
 
 RUN pnpm install --frozen-lockfile --production=false
 
