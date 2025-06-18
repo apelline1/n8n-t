@@ -1,9 +1,11 @@
+import { useAsyncState } from '@vueuse/core';
 import {
 	type LoginRequestDto,
 	type PasswordUpdateRequestDto,
 	type SettingsUpdateRequestDto,
 	type UserUpdateRequestDto,
 	ROLE,
+	type UsersListFilterDto,
 } from '@n8n/api-types';
 import type { UpdateGlobalRolePayload } from '@/api/users';
 import * as usersApi from '@/api/users';
@@ -414,6 +416,16 @@ export const useUsersStore = defineStore(STORES.USERS, () => {
 		return null;
 	};
 
+	const usersList = useAsyncState(
+		async (filter?: UsersListFilterDto) =>
+			await usersApi.getUsersList(rootStore.restApiContext, filter),
+		{
+			count: 0,
+			data: [],
+		},
+		{ immediate: false, resetOnExecute: false },
+	);
+
 	return {
 		initialized,
 		currentUserId,
@@ -466,5 +478,6 @@ export const useUsersStore = defineStore(STORES.USERS, () => {
 		isCalloutDismissed,
 		setCalloutDismissed,
 		submitContactEmail,
+		usersList,
 	};
 });
