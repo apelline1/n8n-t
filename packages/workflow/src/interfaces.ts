@@ -872,6 +872,7 @@ export interface FunctionsBase {
 	getKnownNodeTypes(): IDataObject;
 	getMode?: () => WorkflowExecuteMode;
 	getActivationMode?: () => WorkflowActivateMode;
+	getChatTrigger: () => INode | null;
 
 	/** @deprecated */
 	prepareOutputData(outputData: INodeExecutionData[]): Promise<INodeExecutionData[][]>;
@@ -1191,6 +1192,7 @@ export interface INodeExecutionData {
 		| NodeApiError
 		| NodeOperationError
 		| number
+		| string
 		| undefined;
 	json: IDataObject;
 	binary?: IBinaryKeyData;
@@ -1199,6 +1201,7 @@ export interface INodeExecutionData {
 	metadata?: {
 		subExecution: RelatedExecution;
 	};
+	sendMessage?: string;
 
 	/**
 	 * @deprecated This key was added by accident and should not be used as it
@@ -1608,6 +1611,7 @@ export interface INodeType {
 	description: INodeTypeDescription;
 	supplyData?(this: ISupplyDataFunctions, itemIndex: number): Promise<SupplyData>;
 	execute?(this: IExecuteFunctions): Promise<NodeOutput>;
+	onMessage?(context: IExecuteFunctions, data: INodeExecutionData): Promise<NodeOutput>;
 	poll?(this: IPollFunctions): Promise<INodeExecutionData[][] | null>;
 	trigger?(this: ITriggerFunctions): Promise<ITriggerResponse | undefined>;
 	webhook?(this: IWebhookFunctions): Promise<IWebhookResponseData>;
@@ -2093,7 +2097,12 @@ export interface IWebhookResponseData {
 }
 
 export type WebhookResponseData = 'allEntries' | 'firstEntryJson' | 'firstEntryBinary' | 'noData';
-export type WebhookResponseMode = 'onReceived' | 'lastNode' | 'responseNode' | 'formPage';
+export type WebhookResponseMode =
+	| 'onReceived'
+	| 'lastNode'
+	| 'responseNode'
+	| 'formPage'
+	| 'hostedChat';
 
 export interface INodeTypes {
 	getByName(nodeType: string): INodeType | IVersionedNodeType;
