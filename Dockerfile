@@ -17,9 +17,11 @@ COPY patches/ patches/
 # Install all dependencies (including devDependencies for build)
 RUN pnpm install --frozen-lockfile --production=false
 
-RUN pnpm install --frozen-lockfile --production=false
+# RUN pnpm install --frozen-lockfile --production=false
 
 COPY . . # Copy remaining files
+
+RUN pnpm add -g pnpm  # Update to the latest pnmp version
 
 RUN pnpm run build
 
