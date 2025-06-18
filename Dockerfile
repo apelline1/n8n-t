@@ -1,7 +1,7 @@
 # Use a UBI Node.js image that supports Node.js 20
 # Replace 'ubi8/nodejs-20' with the actual image stream tag available in your OpenShift 4.18
 # For example: registry.redhat.io/ubi8/nodejs-20:latest or openshift/nodejs-20-centos7 (older)
-FROM registry.access.redhat.com/ubi8/nodejs-20:latest AS builder
+FROM registry.access.redhat.com/rhel8/ubi8/nodejs-20:latest AS builder
 
 # Set working directory
 WORKDIR /app
