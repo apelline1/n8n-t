@@ -1,47 +1,43 @@
-# Use a UBI Node.js image that supports Node.js 20
-# Replace 'ubi8/nodejs-20' with the actual image stream tag available in your OpenShift 4.18
-# For example: registry.redhat.io/ubi8/nodejs-20:latest or openshift/nodejs-20-centos7 (older)
-FROM registry.access.redhat.com/rhel8/ubi8/nodejs-20:latest AS builder
+# Use a well-known, accessible base image for Node.js 20 on OpenShift
+FROM registry.redhat.io/rhel8/nodejs-20:latest AS builder
 
-# Set working directory
-WORKDIR /app
-
-# Copy package.json and pnpm-lock.yaml first to leverage Docker layer caching
-COPY package.json pnpm-lock.yaml ./
-# If you have specific pnpm-workspace.yaml, copy that too
-# COPY pnpm-workspace.yaml ./
-
-# Install pnpm globally (or ensure it's available)
-# The UBI Node.js image might already have npm, so we install pnpm specifically.
+USER root
 RUN npm install -g pnpm@9.6.0
+USER 1001
 
-# Install dependencies
-# Use 'pnpm install --frozen-lockfile' for CI/CD to ensure consistent builds
-RUN pnpm install --frozen-lockfile
+WORKDIR /opt/app-root/src
 
-# Copy the rest of your application code
-COPY . .
+COPY package.json pnpm-lock.yaml ./
+COPY pnpm-workspace.yaml ./ # If you have this
+COPY packages packages/
+COPY scripts scripts/
 
-# Build the application
-# This assumes your 'build' script handles the monorepo build with turbo
-RUN pnpm build
+RUN pnpm install --frozen-lockfile --production=false
 
-# --- Runtime Stage (Optional, for smaller production images) ---
-FROM registry.access.redhat.com/ubi8/nodejs-20:latest AS runner
+COPY . . # Copy remaining files
 
-WORKDIR /app
+RUN pnpm run build
 
-# Copy only necessary files from the builder stage
-# This depends on what your 'n8n' application needs to run.
-# Typically, you'd copy:
-# - node_modules
-# - built application code (e.g., dist, build folders)
-# - package.json (for start script)
-COPY --from=builder /app/package.json ./package.json
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/packages ./packages
-# Add other necessary files/folders as per your n8n structure
+FROM registry.redhat.io/rhel8/nodejs-20:latest # Use the same base for consistency
 
-# Set the command to run your application
-# Ensure this matches your 'start' script in package.json
-CMD ["pnpm", "start"]
+USER 1001
+
+WORKDIR /opt/app-root/src
+
+# Copy only essential runtime files from the builder stage
+# This requires knowing n8n's output structure. Example:
+COPY --from=builder /opt/app-root/src/packages/cli/bin /opt/app-root/src/packages/cli/bin
+COPY --from=builder /opt/app-root/src/packages/core /opt/app-root/src/packages/core # Example for built core
+# ... and so on for all your built packages/dist directories needed at runtime
+
+# Copy package.json (or a slimmed down version) for production dependencies
+COPY --from=builder /opt/app-root/src/package.json ./package.json
+COPY --from=builder /opt/app-root/src/pnpm-lock.yaml ./pnpm-lock.yaml
+
+# Install production dependencies only in the final image
+RUN pnpm install --production --frozen-lockfile
+
+EXPOSE 5678 # Default n8n port
+
+# Define your startup command
+CMD ["pnpm", "start:default"]
