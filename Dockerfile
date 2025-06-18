@@ -41,6 +41,8 @@ COPY --from=builder /opt/app-root/src/packages/core /opt/app-root/src/packages/c
 # Copy package.json (or a slimmed down version) for production dependencies
 COPY --from=builder /opt/app-root/src/package.json ./package.json
 COPY --from=builder /opt/app-root/src/pnpm-lock.yaml ./pnpm-lock.yaml
+ENV PNPM_CONCURRENCY=4 
+# Or 2, depending on how low you need to go. Default is usually number of CPU cores.
 
 # Install production dependencies only in the final image
 RUN pnpm install --production --frozen-lockfile
