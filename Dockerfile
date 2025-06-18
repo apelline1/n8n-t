@@ -8,7 +8,8 @@ USER 1001
 WORKDIR /opt/app-root/src
 
 COPY package.json pnpm-lock.yaml ./
-COPY pnpm-workspace.yaml ./ # If you have this
+COPY pnpm-workspace.yaml ./ 
+# If you have this
 COPY packages packages/
 COPY scripts scripts/
 
