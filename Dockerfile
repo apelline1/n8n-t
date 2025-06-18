@@ -2,7 +2,8 @@
 FROM registry.redhat.io/rhel8/nodejs-20:latest AS builder
 
 USER root
-RUN npm install -g pnpm@9.6.0
+RUN npm install -g pnpm
+
 USER 1001
 
 WORKDIR /opt/app-root/src
